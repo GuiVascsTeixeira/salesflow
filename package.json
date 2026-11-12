@@ -1,0 +1,49 @@
+{
+  "name": "salesflow",
+  "version": "0.1.0",
+  "description": "Sistema de gestão comercial e inteligência de vendas para pequenas empresas: produtos, estoque, clientes, vendas, dashboard, relatórios e Power BI",
+  "main": "src/server.js",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mysql",
+    "ejs",
+    "vendas",
+    "estoque",
+    "dashboard",
+    "power-bi"
+  ],
+  "author": "Antonio Guilherme Teixeira Vasconcelos",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuiVascsTeixeira/salesflow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GuiVascsTeixeira/salesflow/issues"
+  },
+  "homepage": "https://github.com/GuiVascsTeixeira/salesflow#readme",
+  "type": "module",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "chart.js": "^4.6.1",
+    "csrf-sync": "^4.2.1",
+    "dotenv": "^18.0.9",
+    "ejs": "^7.0.2",
+    "express": "^5.3.0",
+    "express-mysql-session": "^3.0.3",
+    "express-rate-limit": "^8.7.3",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "mysql2": "^3.24.6"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

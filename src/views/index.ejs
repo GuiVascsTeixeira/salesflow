@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title><%= titulo %></title>
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/csrf.js"></script>
+</head>
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-aside" aria-label="Apresentação do SalesFlow">
+      <a class="brand" href="/" aria-label="SalesFlow início">
+        <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="16" width="5" height="9" rx="1.3" fill="currentColor"/><rect x="13.5" y="11" width="5" height="14" rx="1.3" fill="currentColor"/><rect x="21" y="6" width="5" height="19" rx="1.3" fill="currentColor"/></svg></span>
+        <span>sales<span class="brand-light">flow</span></span>
+      </a>
+
+      <div class="aside-copy">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> GESTÃO COMERCIAL INTELIGENTE</span>
+        <h1>Suas vendas.<br><span>Mais claras.</span><br>Suas decisões.<br><span>Mais fortes.</span></h1>
+        <p>Organize sua operação comercial e transforme informações em decisões melhores para o seu negócio.</p>
+      </div>
+
+      <div class="aside-footer">
+        <span class="aside-line"></span>
+        <span>Controle, organização e inteligência em um só lugar.</span>
+      </div>
+      <div class="decor decor-one"></div>
+      <div class="decor decor-two"></div>
+    </section>
+
+    <section class="auth-main">
+      <div class="auth-card">
+        <div class="mobile-brand brand">
+          <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="16" width="5" height="9" rx="1.3" fill="currentColor"/><rect x="13.5" y="11" width="5" height="14" rx="1.3" fill="currentColor"/><rect x="21" y="6" width="5" height="19" rx="1.3" fill="currentColor"/></svg></span>
+          <span>sales<span class="brand-light">flow</span></span>
+        </div>
+        <div class="form-heading">
+          <span class="form-kicker">BEM-VINDO DE VOLTA</span>
+          <h2>Acesse sua conta</h2>
+          <p>Entre com seus dados para continuar.</p>
+        </div>
+
+        <form id="form-login" class="auth-form">
+          <label for="email">E-mail</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">@</span>
+            <input id="email" name="email" type="email" placeholder="voce@empresa.com" autocomplete="username" required>
+          </div>
+
+          <div class="label-row">
+            <label for="senha">Senha</label>
+          </div>
+          <div class="input-wrap">
+            <span class="input-icon lock-icon" aria-hidden="true">▣</span>
+            <input id="senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password" required>
+          </div>
+
+          <p id="mensagem-login" class="form-message" role="alert" aria-live="polite"></p>
+          <button class="primary-button" type="submit">
+            <span>Entrar na plataforma</span><span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <p class="auth-switch">Ainda não tem uma conta? <a href="/cadastro">Criar conta</a></p>
+        <p class="auth-legal">Ao continuar, você acessará o ambiente da sua empresa no SalesFlow.</p>
+      </div>
+      <span class="copyright">© <%= new Date().getFullYear() %> SalesFlow. Todos os direitos reservados.</span>
+    </section>
+  </main>
+  <script src="/js/auth.js" defer></script>
+</body>
+</html>

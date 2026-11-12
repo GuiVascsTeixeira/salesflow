@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title><%= titulo %></title>
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/csrf.js"></script>
+</head>
+<body class="dashboard-page">
+<%
+  const formas = { dinheiro: 'Dinheiro', pix: 'Pix', cartao_credito: 'Cartão de crédito', cartao_debito: 'Cartão de débito' };
+  const moeda = (valor) => Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+%>
+<div class="sf-layout">
+  <aside class="sf-sidebar" id="menu-lateral">
+    <a class="sf-brand" href="/dashboard"><span class="sf-brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="16" width="5" height="9" rx="1.3" fill="currentColor"/><rect x="13.5" y="11" width="5" height="14" rx="1.3" fill="currentColor"/><rect x="21" y="6" width="5" height="19" rx="1.3" fill="currentColor"/></svg></span><span>sales<span>flow</span></span></a>
+    <div class="sf-nav-label">MENU PRINCIPAL</div>
+    <nav class="sf-nav"><a class="sf-nav-item" href="/dashboard"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><span>Visão geral</span></a></nav>
+    <div class="sf-nav-label sf-nav-label-spaced">GESTÃO COMERCIAL</div>
+    <nav class="sf-nav" aria-label="Módulos de gestão">
+      <a class="sf-nav-item" href="/produtos"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span><span>Produtos</span></a>
+      <a class="sf-nav-item" href="/categorias"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span><span>Categorias</span></a>
+      <a class="sf-nav-item" href="/clientes"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.7a3.5 3.5 0 0 1 0 6.6M18 14.3c2.2.7 3.5 2.6 3.5 5.2"/></svg></span><span>Clientes</span></a>
+      <a class="sf-nav-item is-active" href="/vendas"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></span><span>Vendas</span></a>
+      <a class="sf-nav-item" href="/relatorios"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V7M17 15v-6"/></svg></span><span>Relatórios</span></a>
+    </nav>
+    <div class="sf-sidebar-bottom"><div class="sf-company-card"><span class="sf-company-indicator"></span><div><small>EMPRESA ATIVA</small><strong><%= empresaNome %></strong></div></div></div>
+  </aside>
+  <div class="sf-backdrop" id="menu-fundo" hidden></div>
+  <div class="sf-main">
+    <header class="sf-topbar">
+      <button class="sf-menu-toggle" type="button" id="btn-menu" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <div class="sf-breadcrumb"><a href="/dashboard">SalesFlow</a><i>/</i><strong>Vendas</strong></div>
+      <div class="sf-topbar-right">
+        <div class="sf-user-chip"><span class="sf-user-avatar"><%= (usuario.nome || 'U').charAt(0).toUpperCase() %></span><span class="sf-user-name"><%= usuario.nome %></span></div>
+        <button id="btn-logout" class="sf-logout" type="button">Sair <span aria-hidden="true">↗</span></button>
+      </div>
+    </header>
+    <main class="sf-content">
+      <section class="sf-page-heading">
+        <div><span class="sf-eyebrow">OPERAÇÃO COMERCIAL</span><h1>Vendas</h1><p>Registre vendas, acompanhe o histórico e cancele quando necessário. O estoque é atualizado automaticamente.</p></div>
+        <button class="sf-primary-button" type="button" id="btn-nova-venda">+ Nova venda</button>
+      </section>
+      <section class="sf-kpi-grid sf-module-kpis">
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Vendas listadas</span><span class="sf-kpi-icon is-blue">▤</span></div><strong class="sf-kpi-value"><%= paginacao.total %></strong><span class="sf-kpi-caption">Conforme o filtro aplicado</span></article>
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Faturamento do filtro</span><span class="sf-kpi-icon is-purple">$</span></div><strong class="sf-kpi-value"><%= moeda(faturamento) %></strong><span class="sf-kpi-caption">Só vendas confirmadas</span></article>
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Canceladas</span><span class="sf-kpi-icon is-orange">!</span></div><strong class="sf-kpi-value"><%= totais.canceladas %></strong><span class="sf-kpi-caption"><%= totais.confirmadas %> confirmada(s) no total</span></article>
+      </section>
+      <section class="sf-panel sf-module-panel">
+        <form class="sf-filter-bar" method="get" action="/vendas">
+          <input type="search" name="busca" placeholder="Buscar por nº da venda ou cliente..." value="<%= busca || '' %>">
+          <select name="status"><option value="todas" <%= status === 'todas' ? 'selected' : '' %>>Todas</option><option value="confirmadas" <%= status === 'confirmadas' ? 'selected' : '' %>>Confirmadas</option><option value="canceladas" <%= status === 'canceladas' ? 'selected' : '' %>>Canceladas</option></select>
+          <button class="sf-secondary-button" type="submit">Filtrar</button>
+          <a class="sf-text-link" href="/vendas">Limpar</a>
+        </form>
+        <div class="sf-table-wrap">
+          <table class="sf-table sf-data-table sf-stack">
+            <thead><tr><th>VENDA</th><th>DATA</th><th>CLIENTE</th><th>VENDEDOR</th><th>PAGAMENTO</th><th>TOTAL</th><th>STATUS</th><th>AÇÕES</th></tr></thead>
+            <tbody>
+            <% if (vendas.length) { %>
+              <% vendas.forEach((v) => { %>
+                <tr>
+                  <td><strong>#<%= v.id %></strong></td>
+                  <td><%= v.data_formatada %></td>
+                  <td><%= v.cliente_nome %></td>
+                  <td><%= v.vendedor_nome %></td>
+                  <td><%= formas[v.forma_pagamento] || '—' %></td>
+                  <td><strong><%= moeda(v.total) %></strong><% if (Number(v.desconto) > 0) { %><small class="sf-table-sub">Desconto: <%= moeda(v.desconto) %></small><% } %></td>
+                  <td><span class="sf-status <%= v.status === 'confirmada' ? 'is-confirmed' : 'is-cancelled' %>"><%= v.status === 'confirmada' ? 'Confirmada' : 'Cancelada' %></span></td>
+                  <td class="sf-actions-cell"><button class="sf-table-action" type="button" data-view-sale="<%= v.id %>">Detalhes</button></td>
+                </tr>
+              <% }) %>
+            <% } else { %><tr><td colspan="8" class="sf-empty-cell">Nenhuma venda encontrada. Registre a primeira venda ou ajuste os filtros.</td></tr><% } %>
+            </tbody>
+          </table>
+        </div>
+        <% if (paginacao.totalPaginas > 1) {
+          const q = (n) => '/vendas?' + new URLSearchParams({ ...(busca ? { busca } : {}), ...(status && status !== 'todas' ? { status } : {}), pagina: n }).toString();
+        %>
+        <nav class="sf-pager" aria-label="Paginação">
+          <a class="sf-secondary-button <%= paginacao.pagina <= 1 ? 'is-disabled' : '' %>" href="<%= q(Math.max(1, paginacao.pagina - 1)) %>" <%- paginacao.pagina <= 1 ? 'aria-disabled="true" tabindex="-1"' : '' %>>← Anterior</a>
+          <span>Página <strong><%= paginacao.pagina %></strong> de <%= paginacao.totalPaginas %> · <%= paginacao.total %> venda(s)</span>
+          <a class="sf-secondary-button <%= paginacao.pagina >= paginacao.totalPaginas ? 'is-disabled' : '' %>" href="<%= q(Math.min(paginacao.totalPaginas, paginacao.pagina + 1)) %>" <%- paginacao.pagina >= paginacao.totalPaginas ? 'aria-disabled="true" tabindex="-1"' : '' %>>Próxima →</a>
+        </nav>
+        <% } %>
+      </section>
+
+      <div class="sf-modal" id="modal-venda" aria-hidden="true">
+        <div class="sf-modal-card sf-modal-card-large"><div class="sf-modal-heading"><div><span class="sf-eyebrow">OPERAÇÃO COMERCIAL</span><h2>Nova venda</h2></div><button class="sf-modal-close" type="button" data-close-modal>×</button></div>
+          <form id="form-venda" class="sf-sale-form">
+            <label>Cliente (opcional)
+              <select name="clienteId"><option value="">Consumidor final</option><% catalogo.clientes.forEach(c => { %><option value="<%= c.id %>"><%= c.nome %></option><% }) %></select>
+            </label>
+            <div class="sf-sale-items-head"><strong>Itens da venda</strong><button class="sf-secondary-button" type="button" id="btn-adicionar-item">+ Adicionar item</button></div>
+            <div id="itens-venda" class="sf-sale-items"></div>
+            <div class="sf-sale-pay">
+              <label>Desconto (%)<input name="descontoPercentual" type="number" min="0" max="<%= catalogo.descontoMaximo %>" step="0.01" value="0" inputmode="decimal"><small>Máximo permitido: <%= catalogo.descontoMaximo %>%</small></label>
+              <label>Forma de pagamento
+                <select name="forma" required><% Object.entries(formas).forEach(([valor, rotulo]) => { %><option value="<%= valor %>"><%= rotulo %></option><% }) %></select>
+              </label>
+            </div>
+            <div class="sf-sale-summary" aria-live="polite">
+              <div><span>Subtotal</span><b id="resumo-subtotal">R$ 0,00</b></div>
+              <div><span>Desconto</span><b id="resumo-desconto">R$ 0,00</b></div>
+              <div class="is-total"><span>Total</span><b id="resumo-total">R$ 0,00</b></div>
+            </div>
+            <p class="sf-modal-note">O preço de cada item é lido do cadastro de produtos no momento em que a venda é finalizada. O estoque é baixado automaticamente.</p>
+            <p id="mensagem-venda" class="form-message" role="alert" aria-live="polite"></p>
+            <div class="sf-modal-actions"><button class="sf-secondary-button" type="button" data-close-modal>Cancelar</button><button class="sf-primary-button" type="submit" id="btn-finalizar-venda">Finalizar venda</button></div>
+          </form>
+        </div>
+      </div>
+
+      <div class="sf-modal" id="modal-detalhe-venda" aria-hidden="true">
+        <div class="sf-modal-card"><div class="sf-modal-heading"><div><span class="sf-eyebrow">DETALHES</span><h2 id="titulo-detalhe-venda">Venda</h2></div><button class="sf-modal-close" type="button" data-close-modal>×</button></div>
+          <div id="conteudo-venda"><p class="sf-history-empty">Carregando...</p></div>
+          <form id="form-cancelamento" class="sf-cancel-box" hidden>
+            <input type="hidden" name="id">
+            <label>Motivo do cancelamento<input name="motivo" maxlength="255" required placeholder="Ex.: cliente desistiu da compra"></label>
+            <p class="sf-modal-note">Ao cancelar, o estoque dos itens é devolvido e a venda continua no histórico como cancelada.</p>
+            <div class="sf-modal-actions"><button class="sf-primary-button sf-danger-button" type="submit">Cancelar esta venda</button></div>
+          </form>
+        </div>
+      </div>
+
+      <script type="application/json" id="catalogo-venda"><%- JSON.stringify(catalogo).replace(/</g, '\\u003c') %></script>
+      <footer class="sf-footer">SalesFlow <span>·</span> Gestão comercial e inteligência de vendas</footer>
+      <p id="mensagem-dashboard" class="form-message" role="alert" aria-live="polite"></p>
+    </main>
+  </div>
+</div>
+<script src="/js/auth.js" defer></script>
+<script src="/js/menu.js" defer></script>
+<script src="/js/tabelas.js" defer></script>
+<script src="/js/gestao.js" defer></script>
+<script src="/js/vendas.js" defer></script>
+</body>
+</html>

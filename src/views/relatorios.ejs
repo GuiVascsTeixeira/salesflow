@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title><%= titulo %></title>
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/csrf.js"></script>
+</head>
+<body class="dashboard-page">
+<div class="sf-layout">
+  <aside class="sf-sidebar" id="menu-lateral">
+    <a class="sf-brand" href="/dashboard"><span class="sf-brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="16" width="5" height="9" rx="1.3" fill="currentColor"/><rect x="13.5" y="11" width="5" height="14" rx="1.3" fill="currentColor"/><rect x="21" y="6" width="5" height="19" rx="1.3" fill="currentColor"/></svg></span><span>sales<span>flow</span></span></a>
+    <div class="sf-nav-label">MENU PRINCIPAL</div>
+    <nav class="sf-nav"><a class="sf-nav-item" href="/dashboard"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><span>Visão geral</span></a></nav>
+    <div class="sf-nav-label sf-nav-label-spaced">GESTÃO COMERCIAL</div>
+    <nav class="sf-nav" aria-label="Módulos de gestão">
+      <a class="sf-nav-item" href="/produtos"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span><span>Produtos</span></a>
+      <a class="sf-nav-item" href="/categorias"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span><span>Categorias</span></a>
+      <a class="sf-nav-item" href="/clientes"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.7a3.5 3.5 0 0 1 0 6.6M18 14.3c2.2.7 3.5 2.6 3.5 5.2"/></svg></span><span>Clientes</span></a>
+      <a class="sf-nav-item" href="/vendas"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></span><span>Vendas</span></a>
+      <a class="sf-nav-item is-active" href="/relatorios"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V7M17 15v-6"/></svg></span><span>Relatórios</span></a>
+    </nav>
+    <div class="sf-sidebar-bottom"><div class="sf-company-card"><span class="sf-company-indicator"></span><div><small>EMPRESA ATIVA</small><strong><%= empresaNome %></strong></div></div></div>
+  </aside>
+  <div class="sf-backdrop" id="menu-fundo" hidden></div>
+  <div class="sf-main">
+    <header class="sf-topbar">
+      <button class="sf-menu-toggle" type="button" id="btn-menu" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <div class="sf-breadcrumb"><a href="/dashboard">SalesFlow</a><i>/</i><strong>Relatórios</strong></div>
+      <div class="sf-topbar-right">
+        <div class="sf-user-chip"><span class="sf-user-avatar"><%= (usuario.nome || 'U').charAt(0).toUpperCase() %></span><span class="sf-user-name"><%= usuario.nome %></span></div>
+        <button id="btn-logout" class="sf-logout" type="button">Sair <span aria-hidden="true">↗</span></button>
+      </div>
+    </header>
+    <main class="sf-content">
+      <section class="sf-page-heading">
+        <div><span class="sf-eyebrow">INTELIGÊNCIA DE VENDAS</span><h1>Relatórios</h1><p>Analise faturamento, lucro, formas de pagamento e desempenho de produtos em qualquer período.</p></div>
+      </section>
+
+      <section class="sf-panel sf-module-panel">
+        <form class="sf-filter-bar" id="form-periodo">
+          <label class="sf-inline-field">De <input type="date" name="inicio" value="<%= inicio %>" required></label>
+          <label class="sf-inline-field">Até <input type="date" name="fim" value="<%= fim %>" required></label>
+          <button class="sf-secondary-button" type="submit">Aplicar</button>
+          <button class="sf-secondary-button" type="button" data-atalho="7">7 dias</button>
+          <button class="sf-secondary-button" type="button" data-atalho="30">30 dias</button>
+          <button class="sf-secondary-button" type="button" data-atalho="90">90 dias</button>
+          <a class="sf-primary-button" id="link-csv" href="#">Exportar vendas (CSV)</a>
+        </form>
+        <p id="mensagem-relatorio" class="form-message" role="alert"></p>
+      </section>
+
+      <section class="sf-kpi-grid" aria-label="Indicadores do período">
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Faturamento</span><span class="sf-kpi-icon is-green">R$</span></div><strong class="sf-kpi-value" id="kpi-faturamento">—</strong><span class="sf-kpi-caption" id="kpi-vendas">—</span></article>
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Lucro bruto</span><span class="sf-kpi-icon is-blue">↗</span></div><strong class="sf-kpi-value" id="kpi-lucro">—</strong><span class="sf-kpi-caption" id="kpi-margem">—</span></article>
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Ticket médio</span><span class="sf-kpi-icon is-purple">▤</span></div><strong class="sf-kpi-value" id="kpi-ticket">—</strong><span class="sf-kpi-caption" id="kpi-unidades">—</span></article>
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Descontos / cancelamentos</span><span class="sf-kpi-icon is-orange">!</span></div><strong class="sf-kpi-value" id="kpi-descontos">—</strong><span class="sf-kpi-caption" id="kpi-canceladas">—</span></article>
+      </section>
+
+      <section class="sf-panel sf-report-panel">
+        <div class="sf-panel-heading"><div><h2>Faturamento por dia</h2><p>Vendas confirmadas</p></div></div>
+        <div class="sf-chart-box"><canvas id="grafico-dia" aria-label="Faturamento por dia" role="img"></canvas></div>
+      </section>
+
+      <section class="sf-report-grid">
+        <article class="sf-panel"><div class="sf-panel-heading"><div><h2>Formas de pagamento</h2><p>Participação no faturamento</p></div></div><div class="sf-chart-box sf-chart-small"><canvas id="grafico-forma" aria-label="Formas de pagamento" role="img"></canvas></div></article>
+        <article class="sf-panel"><div class="sf-panel-heading"><div><h2>Faturamento por categoria</h2><p>Quanto cada categoria vendeu</p></div></div><div class="sf-chart-box sf-chart-small"><canvas id="grafico-categoria" aria-label="Faturamento por categoria" role="img"></canvas></div></article>
+      </section>
+
+      <section class="sf-report-grid">
+        <article class="sf-panel"><div class="sf-panel-heading"><div><h2>Top 10 produtos</h2><p>Por faturamento no período</p></div></div>
+          <div class="sf-table-wrap"><table class="sf-table"><thead><tr><th>PRODUTO</th><th>UNID.</th><th>FATURAMENTO</th><th>LUCRO</th></tr></thead><tbody id="tabela-produtos"></tbody></table></div></article>
+        <article class="sf-panel"><div class="sf-panel-heading"><div><h2>Desempenho por vendedor</h2><p>Vendas confirmadas</p></div></div>
+          <div class="sf-table-wrap"><table class="sf-table"><thead><tr><th>VENDEDOR</th><th>VENDAS</th><th>FATURAMENTO</th></tr></thead><tbody id="tabela-vendedores"></tbody></table></div></article>
+      </section>
+
+      <section class="sf-panel sf-report-panel">
+        <div class="sf-panel-heading"><div><h2>Estoque crítico</h2><p>Produtos ativos no mínimo ou abaixo dele (situação de hoje)</p></div><a class="sf-text-link" href="/produtos">Ir para produtos</a></div>
+        <div class="sf-table-wrap"><table class="sf-table"><thead><tr><th>PRODUTO</th><th>SKU</th><th>ESTOQUE</th><th>MÍNIMO</th></tr></thead><tbody id="tabela-estoque"></tbody></table></div>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="/vendor/chart.js/chart.umd.js" defer></script>
+<script src="/js/auth.js" defer></script>
+<script src="/js/menu.js" defer></script>
+<script src="/js/tabelas.js" defer></script>
+<script src="/js/relatorios.js" defer></script>
+</body>
+</html>

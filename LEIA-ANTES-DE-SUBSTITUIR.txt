@@ -1,0 +1,37 @@
+SALESFLOW - MÓDULO DE VENDAS
+
+ARQUIVOS NOVOS
+- src/routes/vendas.routes.js
+- src/controllers/vendas.controller.js
+- src/services/vendas.service.js
+- src/repositories/vendas.repository.js
+- src/utils/dinheiro.js
+- src/views/vendas.ejs
+- src/public/js/vendas.js
+
+ARQUIVOS ALTERADOS
+- src/app.js                    (registra as rotas /api/vendas)
+- src/routes/paginas.routes.js  (página /vendas)
+- src/public/css/style.css      (estilos do formulário de venda)
+- src/views/dashboard.ejs, produtos.ejs, categorias.ejs, clientes.ejs (link "Vendas" no menu)
+
+BANCO DE DADOS
+Nenhum SQL é necessário: as tabelas vendas, itens_venda, pagamentos e
+movimentacoes_estoque já existem no schema.sql.
+NÃO execute database/schema.sql (ele contém DROP DATABASE).
+
+COMO APLICAR
+1. Pare o servidor (Ctrl+C) e faça uma cópia de segurança da pasta.
+2. Extraia o ZIP e copie o CONTEÚDO da pasta "projeto" para dentro da pasta
+   principal do projeto (a que tem o package.json), substituindo os arquivos.
+   Cuidado para não criar "projeto\projeto".
+3. Mantenha o seu .env e a pasta node_modules (este ZIP não os contém).
+4. npm run dev e acesse /vendas.
+
+REGRAS DO MÓDULO
+- Preço e custo são lidos do banco no momento da venda (a tela não decide o preço).
+- Venda, itens, pagamento e baixa de estoque são gravados juntos (transação).
+- Estoque insuficiente bloqueia a venda; o saldo nunca fica negativo.
+- Desconto em %, limitado ao desconto_maximo da empresa.
+- Venda confirmada não é editada: cancele (com motivo) e refaça.
+- Cancelar devolve o estoque e registra quem, quando e o motivo.

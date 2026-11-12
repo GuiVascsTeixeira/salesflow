@@ -1,0 +1,15 @@
+# Dependências (são recriadas com "npm install")
+node_modules/
+
+# Segredos: senhas e configurações locais
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db

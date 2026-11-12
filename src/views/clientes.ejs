@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title><%= titulo %></title>
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/csrf.js"></script>
+</head>
+<body class="dashboard-page">
+<div class="sf-layout">
+  <aside class="sf-sidebar" id="menu-lateral">
+    <a class="sf-brand" href="/dashboard"><span class="sf-brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="16" width="5" height="9" rx="1.3" fill="currentColor"/><rect x="13.5" y="11" width="5" height="14" rx="1.3" fill="currentColor"/><rect x="21" y="6" width="5" height="19" rx="1.3" fill="currentColor"/></svg></span><span>sales<span>flow</span></span></a>
+    <div class="sf-nav-label">MENU PRINCIPAL</div>
+    <nav class="sf-nav"><a class="sf-nav-item" href="/dashboard"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><span>Visão geral</span></a></nav>
+    <div class="sf-nav-label sf-nav-label-spaced">GESTÃO COMERCIAL</div>
+    <nav class="sf-nav" aria-label="Módulos de gestão">
+      <a class="sf-nav-item" href="/produtos"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span><span>Produtos</span></a>
+      <a class="sf-nav-item" href="/categorias"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span><span>Categorias</span></a>
+      <a class="sf-nav-item is-active" href="/clientes"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.7a3.5 3.5 0 0 1 0 6.6M18 14.3c2.2.7 3.5 2.6 3.5 5.2"/></svg></span><span>Clientes</span></a>
+      <a class="sf-nav-item" href="/vendas"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></span><span>Vendas</span></a>
+      <a class="sf-nav-item" href="/relatorios"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V7M17 15v-6"/></svg></span><span>Relatórios</span></a>
+    </nav>
+    <div class="sf-sidebar-bottom"><div class="sf-company-card"><span class="sf-company-indicator"></span><div><small>EMPRESA ATIVA</small><strong><%= empresaNome %></strong></div></div></div>
+  </aside>
+  <div class="sf-backdrop" id="menu-fundo" hidden></div>
+  <div class="sf-main">
+    <header class="sf-topbar">
+      <button class="sf-menu-toggle" type="button" id="btn-menu" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <div class="sf-breadcrumb"><a href="/dashboard">SalesFlow</a><i>/</i><strong>Clientes</strong></div>
+      <div class="sf-topbar-right">
+        <div class="sf-user-chip"><span class="sf-user-avatar"><%= (usuario.nome || 'U').charAt(0).toUpperCase() %></span><span class="sf-user-name"><%= usuario.nome %></span></div>
+        <button id="btn-logout" class="sf-logout" type="button">Sair <span aria-hidden="true">↗</span></button>
+      </div>
+    </header>
+    <main class="sf-content">
+      <section class="sf-page-heading">
+        <div><span class="sf-eyebrow">RELACIONAMENTO COMERCIAL</span><h1>Clientes</h1><p>Cadastre e organize os clientes da empresa. Nas vendas, o cliente é opcional.</p></div>
+        <button class="sf-primary-button" type="button" id="btn-novo-cliente">+ Novo cliente</button>
+      </section>
+      <section class="sf-kpi-grid sf-module-kpis">
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Clientes listados</span><span class="sf-kpi-icon is-blue">♙</span></div><strong class="sf-kpi-value"><%= clientes.length %></strong><span class="sf-kpi-caption">Conforme o filtro selecionado</span></article>
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Clientes ativos</span><span class="sf-kpi-icon is-purple">✓</span></div><strong class="sf-kpi-value"><%= totais.ativos %></strong><span class="sf-kpi-caption">Disponíveis para vendas</span></article>
+        <article class="sf-kpi-card"><div class="sf-kpi-top"><span>Clientes inativos</span><span class="sf-kpi-icon is-orange">!</span></div><strong class="sf-kpi-value"><%= totais.inativos %></strong><span class="sf-kpi-caption">Histórico preservado</span></article>
+      </section>
+      <section class="sf-panel sf-module-panel">
+        <form class="sf-filter-bar" method="get" action="/clientes">
+          <input type="search" name="busca" placeholder="Buscar por nome, e-mail ou telefone..." value="<%= busca || '' %>">
+          <select name="status"><option value="ativos" <%= status === 'ativos' ? 'selected' : '' %>>Ativos</option><option value="inativos" <%= status === 'inativos' ? 'selected' : '' %>>Inativos</option><option value="todos" <%= status === 'todos' ? 'selected' : '' %>>Todos</option></select>
+          <button class="sf-secondary-button" type="submit">Filtrar</button>
+          <a class="sf-text-link" href="/clientes">Limpar</a>
+        </form>
+        <div class="sf-table-wrap">
+          <table class="sf-table sf-data-table sf-stack">
+            <thead><tr><th>CLIENTE</th><th>E-MAIL</th><th>TELEFONE</th><th>CADASTRO</th><th>STATUS</th><th>AÇÕES</th></tr></thead>
+            <tbody>
+            <% if (clientes.length) { %>
+              <% clientes.forEach((c) => { %>
+                <tr>
+                  <td><strong><%= c.nome %></strong></td>
+                  <td><%= c.email || '—' %></td>
+                  <td><%= c.telefone || '—' %></td>
+                  <td><%= c.criado_em_formatado %></td>
+                  <td><span class="sf-status <%= c.ativo ? 'is-confirmed' : 'is-cancelled' %>"><%= c.ativo ? 'Ativo' : 'Inativo' %></span></td>
+                  <td class="sf-actions-cell">
+                    <button class="sf-table-action" type="button" data-edit-client="<%= c.id %>">Editar</button>
+                    <% if (c.ativo) { %>
+                      <button class="sf-table-action is-danger" type="button" data-deactivate-client="<%= c.id %>">Inativar</button>
+                    <% } else { %>
+                      <button class="sf-table-action" type="button" data-reactivate-client="<%= c.id %>">Reativar</button>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %><tr><td colspan="6" class="sf-empty-cell">Nenhum cliente encontrado. Cadastre o primeiro cliente ou ajuste os filtros.</td></tr><% } %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="sf-modal" id="modal-cliente" aria-hidden="true">
+        <div class="sf-modal-card sf-modal-card-small"><div class="sf-modal-heading"><div><span class="sf-eyebrow">CLIENTES</span><h2 id="titulo-modal-cliente">Novo cliente</h2></div><button class="sf-modal-close" type="button" data-close-modal>×</button></div>
+          <form id="form-cliente" class="sf-form-grid">
+            <input type="hidden" name="id">
+            <label class="sf-field-wide">Nome do cliente<input name="nome" maxlength="120" required></label>
+            <label class="sf-field-wide">E-mail (opcional)<input name="email" type="email" maxlength="150" placeholder="cliente@exemplo.com"></label>
+            <label class="sf-field-wide">Telefone (opcional)<input name="telefone" type="tel" maxlength="20" placeholder="(85) 99999-9999"></label>
+            <p class="sf-modal-note">O e-mail, quando informado, deve ser único dentro da sua empresa.</p>
+            <div class="sf-modal-actions"><button class="sf-secondary-button" type="button" data-close-modal>Cancelar</button><button class="sf-primary-button" type="submit">Salvar cliente</button></div>
+          </form>
+        </div>
+      </div>
+      <footer class="sf-footer">SalesFlow <span>·</span> Gestão comercial e inteligência de vendas</footer>
+      <p id="mensagem-dashboard" class="form-message" role="alert" aria-live="polite"></p>
+    </main>
+  </div>
+</div>
+<script src="/js/auth.js" defer></script>
+<script src="/js/menu.js" defer></script>
+<script src="/js/tabelas.js" defer></script>
+<script src="/js/gestao.js" defer></script>
+<script src="/js/clientes.js" defer></script>
+</body>
+</html>

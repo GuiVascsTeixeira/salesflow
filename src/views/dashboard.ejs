@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title><%= titulo %></title>
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/csrf.js"></script>
+</head>
+<body class="dashboard-page">
+  <div class="sf-layout">
+    <aside class="sf-sidebar" id="menu-lateral">
+      <a class="sf-brand" href="/dashboard" aria-label="SalesFlow - visão geral">
+        <span class="sf-brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="16" width="5" height="9" rx="1.3" fill="currentColor"/><rect x="13.5" y="11" width="5" height="14" rx="1.3" fill="currentColor"/><rect x="21" y="6" width="5" height="19" rx="1.3" fill="currentColor"/></svg></span>
+        <span>sales<span>flow</span></span>
+      </a>
+
+      <div class="sf-nav-label">MENU PRINCIPAL</div>
+      <nav class="sf-nav" aria-label="Menu principal">
+        <a class="sf-nav-item is-active" href="/dashboard">
+          <span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><span>Visão geral</span>
+        </a>
+      </nav>
+
+      <div class="sf-nav-label sf-nav-label-spaced">GESTÃO COMERCIAL</div>
+      <nav class="sf-nav" aria-label="Módulos de gestão">
+        <a class="sf-nav-item" href="/produtos"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span><span>Produtos</span></a>
+        <a class="sf-nav-item" href="/categorias"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span><span>Categorias</span></a>
+        <a class="sf-nav-item" href="/clientes"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.7a3.5 3.5 0 0 1 0 6.6M18 14.3c2.2.7 3.5 2.6 3.5 5.2"/></svg></span><span>Clientes</span></a>
+        <a class="sf-nav-item" href="/vendas"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></span><span>Vendas</span></a>
+        <a class="sf-nav-item" href="/relatorios"><span class="sf-nav-icon"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V7M17 15v-6"/></svg></span><span>Relatórios</span></a>
+      </nav>
+
+      <div class="sf-sidebar-bottom">
+        <div class="sf-company-card">
+          <span class="sf-company-indicator"></span>
+          <div><small>EMPRESA ATIVA</small><strong><%= empresaNome %></strong></div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="sf-backdrop" id="menu-fundo" hidden></div>
+  <div class="sf-main">
+      <header class="sf-topbar">
+        <button class="sf-menu-toggle" type="button" id="btn-menu" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <div class="sf-breadcrumb"><span>SalesFlow</span><i>/</i><strong>Visão geral</strong></div>
+        <div class="sf-topbar-right">
+          <span class="sf-current-date"><%= dataAtualLabel %></span>
+          <div class="sf-user-chip">
+            <span class="sf-user-avatar"><%= (usuario.nome || 'U').charAt(0).toUpperCase() %></span>
+            <span class="sf-user-name"><%= usuario.nome %></span>
+          </div>
+          <button id="btn-logout" class="sf-logout" type="button">Sair <span aria-hidden="true">↗</span></button>
+        </div>
+      </header>
+
+      <main class="sf-content">
+        <section class="sf-page-heading">
+          <div>
+            <span class="sf-eyebrow">PAINEL DA EMPRESA</span>
+            <h1>Visão geral</h1>
+            <p>Acompanhe os principais números da sua operação comercial.</p>
+          </div>
+          <div class="sf-period-card"><small>PERÍODO DOS INDICADORES</small><strong><%= mesAtualLabel %></strong></div>
+        </section>
+
+        <section class="sf-kpi-grid" aria-label="Indicadores do mês">
+          <article class="sf-kpi-card">
+            <div class="sf-kpi-top"><span>Faturamento do mês</span><span class="sf-kpi-icon is-green">R$</span></div>
+            <strong class="sf-kpi-value"><%= indicadores.faturamentoMes %></strong>
+            <span class="sf-kpi-caption">Vendas confirmadas no mês</span>
+          </article>
+          <article class="sf-kpi-card">
+            <div class="sf-kpi-top"><span>Vendas confirmadas</span><span class="sf-kpi-icon is-blue">↗</span></div>
+            <strong class="sf-kpi-value"><%= indicadores.vendasMes.toLocaleString('pt-BR') %></strong>
+            <span class="sf-kpi-caption">Quantidade neste mês</span>
+          </article>
+          <article class="sf-kpi-card">
+            <div class="sf-kpi-top"><span>Produtos ativos</span><span class="sf-kpi-icon is-purple">▦</span></div>
+            <strong class="sf-kpi-value"><%= indicadores.produtosAtivos.toLocaleString('pt-BR') %></strong>
+            <span class="sf-kpi-caption">Itens disponíveis no catálogo</span>
+          </article>
+          <article class="sf-kpi-card <%= indicadores.estoqueBaixo > 0 ? 'has-warning' : '' %>">
+            <div class="sf-kpi-top"><span>Estoque baixo</span><span class="sf-kpi-icon is-orange">!</span></div>
+            <strong class="sf-kpi-value"><%= indicadores.estoqueBaixo.toLocaleString('pt-BR') %></strong>
+            <span class="sf-kpi-caption">Produtos no mínimo ou abaixo dele</span>
+          </article>
+        </section>
+
+        <section class="sf-primary-grid">
+          <article class="sf-panel">
+            <div class="sf-panel-heading">
+              <div><h2>Vendas nos últimos 7 dias</h2><p>Faturamento por dia</p></div>
+              <span class="sf-panel-tag">ÚLTIMA SEMANA</span>
+            </div>
+            <% if (temVendasNoGrafico) { %>
+              <div class="sf-chart" role="img" aria-label="Gráfico de faturamento diário dos últimos sete dias">
+                <% graficoVendas.forEach((dia) => { %>
+                  <div class="sf-chart-column">
+                    <span class="sf-chart-value"><%= dia.valorLabel %></span>
+                    <div class="sf-chart-track"><div class="sf-chart-bar" style="height: <%= dia.altura %>%"></div></div>
+                    <span class="sf-chart-day"><%= dia.rotulo %></span>
+                  </div>
+                <% }) %>
+              </div>
+            <% } else { %>
+              <div class="sf-empty-chart">
+                <span class="sf-empty-icon">▥</span>
+                <strong>Nenhuma venda nesta semana</strong>
+                <p>Quando sua empresa registrar vendas, a evolução diária aparecerá aqui.</p>
+              </div>
+            <% } %>
+          </article>
+
+          <article class="sf-panel">
+            <div class="sf-panel-heading">
+              <div><h2>Produtos mais vendidos</h2><p>Desempenho no mês atual</p></div>
+              <span class="sf-panel-symbol">✦</span>
+            </div>
+            <% if (produtosMaisVendidos.length > 0) { %>
+              <div class="sf-product-list">
+                <% produtosMaisVendidos.forEach((produto, indice) => { %>
+                  <div class="sf-product-row">
+                    <span class="sf-product-rank"><%= indice + 1 %></span>
+                    <div class="sf-product-info"><strong><%= produto.nome %></strong><span><%= produto.unidades.toLocaleString('pt-BR') %> unidade(s)</span></div>
+                    <strong class="sf-product-total"><%= produto.faturamentoFormatado %></strong>
+                  </div>
+                <% }) %>
+              </div>
+            <% } else { %>
+              <div class="sf-empty-small"><strong>Sem produtos vendidos ainda</strong><p>Os produtos com mais saída serão listados aqui após as primeiras vendas.</p></div>
+            <% } %>
+          </article>
+        </section>
+
+        <section class="sf-secondary-grid">
+          <article class="sf-panel sf-recent-panel">
+            <div class="sf-panel-heading">
+              <div><h2>Vendas recentes</h2><p>Últimas movimentações registradas</p></div>
+              <span class="sf-panel-tag">ÚLTIMAS 6</span>
+            </div>
+            <% if (vendasRecentes.length > 0) { %>
+              <div class="sf-table-wrap">
+                <table class="sf-table sf-stack">
+                  <thead><tr><th>VENDA</th><th>CLIENTE</th><th>DATA</th><th>VALOR</th><th>STATUS</th></tr></thead>
+                  <tbody>
+                    <% vendasRecentes.forEach((venda) => { %>
+                      <tr>
+                        <td class="sf-sale-id">#<%= venda.id %></td>
+                        <td><%= venda.cliente %></td>
+                        <td><%= venda.dataFormatada %></td>
+                        <td class="sf-sale-total"><%= venda.totalFormatado %></td>
+                        <td><span class="sf-status <%= venda.statusClasse %>"><%= venda.statusLabel %></span></td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            <% } else { %>
+              <div class="sf-empty-small"><strong>Nenhuma venda registrada</strong><p>Assim que as vendas forem lançadas, você poderá acompanhar as movimentações por aqui.</p></div>
+            <% } %>
+          </article>
+
+          <aside class="sf-panel sf-operation-panel">
+            <div class="sf-panel-heading"><div><h2>Resumo da operação</h2><p>Cadastros da empresa</p></div></div>
+            <div class="sf-customer-stat"><span class="sf-customer-icon">♙</span><div><small>CLIENTES ATIVOS</small><strong><%= indicadores.clientesAtivos.toLocaleString('pt-BR') %></strong></div></div>
+            <div class="sf-operation-note"><span class="sf-note-dot"></span><p>Os dados exibidos pertencem somente à empresa conectada nesta sessão.</p></div>
+          </aside>
+        </section>
+
+        <footer class="sf-footer">SalesFlow <span>·</span> Gestão comercial e inteligência de vendas</footer>
+        <p id="mensagem-dashboard" class="form-message" role="alert" aria-live="polite"></p>
+      </main>
+    </div>
+  </div>
+  <script src="/js/auth.js" defer></script>
+<script src="/js/menu.js" defer></script>
+<script src="/js/tabelas.js" defer></script>
+</body>
+</html>
